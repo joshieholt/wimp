@@ -39,8 +39,13 @@ public class ActorApiController {
     }
     
     @GetMapping("{id}")
-    public Actor getOne(@PathVariable long id) {
-        return actorRepo.findOne(id);
+    public Actor getOne(@PathVariable long id) throws StuffNotFoundException {
+        Actor actor = actorRepo.findOne(id);
+        
+        if (actor == null) {
+            throw new StuffNotFoundException();
+        }
+        return actor;
     }
     
     @DeleteMapping("{id}")

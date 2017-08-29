@@ -39,8 +39,14 @@ public class MovieApiController {
     }
     
     @GetMapping("{id}")
-    public Movie getOne(@PathVariable long id) {
-        return movieRepo.findOne(id);
+    public Movie getOne(@PathVariable long id) throws StuffNotFoundException {
+        Movie movie = movieRepo.findOne(id);
+        
+        if (movie == null) {
+            throw new StuffNotFoundException();
+        }
+        
+        return movie;
     }
     
     @DeleteMapping("{id}")
