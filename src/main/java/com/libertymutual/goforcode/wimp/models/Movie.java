@@ -26,4 +26,74 @@ public class Movie {
     @Column(length=500, nullable=false)
     private String distributor;
 
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return the releaseDate
+     */
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    /**
+     * @param releaseDate the releaseDate to set
+     */
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    /**
+     * @return the budget
+     */
+    public Long getBudget() {
+        return budget;
+    }
+
+    /**
+     * @param budget the budget to set
+     */
+    public void setBudget(Long budget) {
+        this.budget = budget;
+    }
+
+    /**
+     * @return the distributor
+     */
+    public String getDistributor() {
+        return distributor;
+    }
+
+    /**
+     * @param distributor the distributor to set
+     */
+    public void setDistributor(String distributor) {
+        this.distributor = distributor;
+    }
+
 }
