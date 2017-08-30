@@ -1,6 +1,7 @@
 
 package com.libertymutual.goforcode.wimp.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@JsonIdentityInfo(
+       generator=ObjectIdGenerators.PropertyGenerator.class,
+       property="id"
+       )
 @Entity
 public class Actor {
 
@@ -30,9 +36,11 @@ public class Actor {
     
     private Date birthDate;
     
-    @JsonIgnore
     @ManyToMany(mappedBy="actors")
     private List<Movie> movies;
+    
+    @ManyToMany
+    private List<Award> awards;
 
     public Actor() {}
     
@@ -40,6 +48,13 @@ public class Actor {
         this.firstName = firstName;
         this.lastName = lastName;
         this.activeSinceYear = activeSinceYear;
+    }
+    
+    public void addAward(Award award) {
+        if (awards == null) {
+            awards = new ArrayList<Award>();
+        }
+        awards.add(award);
     }
     
     /**
@@ -124,5 +139,19 @@ public class Actor {
      */
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
+    }
+
+    /**
+     * @return the awards
+     */
+    public List<Award> getAwards() {
+        return awards;
+    }
+
+    /**
+     * @param awards the awards to set
+     */
+    public void setAwards(List<Award> awards) {
+        this.awards = awards;
     }
 }

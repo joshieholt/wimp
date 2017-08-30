@@ -14,18 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.libertymutual.goforcode.wimp.models.Actor;
-import com.libertymutual.goforcode.wimp.models.ActorWithMovies;
+import com.libertymutual.goforcode.wimp.models.Award;
 import com.libertymutual.goforcode.wimp.repositories.ActorRepository;
+import com.libertymutual.goforcode.wimp.repositories.AwardRepository;
 
 @RestController
 @RequestMapping("/api/actors")
 public class ActorApiController {
 
     private ActorRepository actorRepo;
+    private AwardRepository awardRepo;
     
-    public ActorApiController(ActorRepository actorRepo) {
+    public ActorApiController(ActorRepository actorRepo, AwardRepository awardRepo) {
         this.actorRepo = actorRepo;
+        this.awardRepo = awardRepo;
         
+//        Award award = new Award("Best Actor", "Oscars", 1996);
+//        awardRepo.save(award);
+//        award = new Award("Second Best Actor", "Oscars", 1998);
+//        awardRepo.save(award);
         actorRepo.save(new Actor("Marky", "Mark", 1994));
         actorRepo.save(new Actor("Donnie", "Wahlberg", 1989));
         actorRepo.save(new Actor("Keanu", "Reeves", 1992));
@@ -43,13 +50,8 @@ public class ActorApiController {
         if (actor == null) {
             throw new StuffNotFoundException();
         }
-        ActorWithMovies newActor = new ActorWithMovies();
-        newActor.setActiveSinceYear(actor.getActiveSinceYear());
-        newActor.setBirthDate(actor.getBirthDate());
-        newActor.setMovies(actor.getMovies());
-        newActor.setFirstName(actor.getFirstName());
-        newActor.setLastName(actor.getLastName());
-        return newActor;
+
+        return actor;
     }
     
     @DeleteMapping("{id}")
@@ -72,5 +74,17 @@ public class ActorApiController {
     public Actor update(@RequestBody Actor actor, @PathVariable long id) {
         actor.setId(id);
         return actorRepo.save(actor);
+    }
+    
+    @PostMapping("{actorId}/awards")
+    public Actor associateAnAward(@PathVariable long actorId, @RequestBody Award award) {
+        Award newAward = new Award(award.getTitle(), award.getOrganization(), award.getYear());
+        awardRepo.save(newAward);
+//        newAward.setId(award.getId());
+//        award = awardRepo.findOne(award.getId());
+        Actor actor = actorRepo.findOne(actorId);
+        actor.addAward(newAward);
+        actorRepo.save(actor);
+        return actor;
     }
 }
