@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Actor {
 
@@ -28,9 +30,18 @@ public class Actor {
     
     private Date birthDate;
     
+    @JsonIgnore
     @ManyToMany(mappedBy="actors")
     private List<Movie> movies;
 
+    public Actor() {}
+    
+    public Actor(String firstName, String lastName, long activeSinceYear) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.activeSinceYear = activeSinceYear;
+    }
+    
     /**
      * @return the id
      */

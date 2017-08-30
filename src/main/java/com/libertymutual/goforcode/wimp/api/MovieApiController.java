@@ -27,7 +27,6 @@ public class MovieApiController {
     
     private MovieRepository movieRepo;
     
-    
     private ActorRepository actorRepo;
     
     public MovieApiController(MovieRepository movieRepo, ActorRepository actorRepo) {
@@ -36,14 +35,15 @@ public class MovieApiController {
         
         List<Actor> actors = new ArrayList<Actor>();
         actors.add(actorRepo.findOne((long) 1));
+        actors.add(actorRepo.findOne((long) 2));
         
-        Movie movie = new Movie();
-        movie.setBudget((long) 100000000);
-        movie.setDistributor("Warner Bros");
-//        movie.setReleaseDate(releaseDate);
-        movie.setTitle("Wicked Boston, Kid");
-        movie.setActors(actors);
-        movieRepo.save(movie);
+        movieRepo.save(new Movie("Wicked Boston, Kid", 100000000, "Warner Bros", actors));
+        
+        actors = new ArrayList<Actor>();
+        actors.add(actorRepo.findOne((long) 3));
+        
+        movieRepo.save(new Movie("The Matrix", 45000, "MGM", actors));
+        
     }
     
     @GetMapping("")
@@ -53,6 +53,7 @@ public class MovieApiController {
     
     @GetMapping("{id}")
     public Movie getOne(@PathVariable long id) throws StuffNotFoundException {
+        
         Movie movie = movieRepo.findOne(id);
         
         if (movie == null) {
@@ -82,6 +83,14 @@ public class MovieApiController {
     public Movie update(@RequestBody Movie movie, @PathVariable long id) {
         movie.setId(id);
         return movieRepo.save(movie);
-        
+    }
+    
+    @PostMapping("{movieId}/actors")
+    public Movie associateAnActor(@PathVariable long movieId, @RequestBody Actor actor) {
+        actor = actorRepo.findOne(actor.getId());
+        Movie movie = movieRepo.findOne(movieId);
+        movie.addActor(actor);
+        movieRepo.save(movie);
+        return movie;
     }
 }

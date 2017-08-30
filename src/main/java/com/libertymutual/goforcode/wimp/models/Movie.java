@@ -1,6 +1,7 @@
 
 package com.libertymutual.goforcode.wimp.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,24 +14,41 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Movie {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(length=300, nullable=false)
+
+    @Column(length = 300, nullable = false)
     private String title;
-    
+
     private Date releaseDate;
-    
+
     private Long budget;
-    
-    @Column(length=500, nullable=false)
+
+    @Column(length = 500, nullable = false)
     private String distributor;
 
     @ManyToMany
     private List<Actor> actors;
-    
+
+    public Movie() {
+    }
+
+    public Movie(String title, long budget, String distributor, List<Actor> actors) {
+        this.title = title;
+        this.budget = budget;
+        this.distributor = distributor;
+        this.actors = actors;
+    }
+
+    public void addActor(Actor actor) {
+        if (actors == null) {
+            actors = new ArrayList<Actor>();
+        }
+        actors.add(actor);
+    }
+
     /**
      * @return the id
      */
@@ -39,7 +57,8 @@ public class Movie {
     }
 
     /**
-     * @param id the id to set
+     * @param id
+     *            the id to set
      */
     public void setId(Long id) {
         this.id = id;
@@ -53,7 +72,8 @@ public class Movie {
     }
 
     /**
-     * @param title the title to set
+     * @param title
+     *            the title to set
      */
     public void setTitle(String title) {
         this.title = title;
@@ -67,7 +87,8 @@ public class Movie {
     }
 
     /**
-     * @param releaseDate the releaseDate to set
+     * @param releaseDate
+     *            the releaseDate to set
      */
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
@@ -81,7 +102,8 @@ public class Movie {
     }
 
     /**
-     * @param budget the budget to set
+     * @param budget
+     *            the budget to set
      */
     public void setBudget(Long budget) {
         this.budget = budget;
@@ -95,7 +117,8 @@ public class Movie {
     }
 
     /**
-     * @param distributor the distributor to set
+     * @param distributor
+     *            the distributor to set
      */
     public void setDistributor(String distributor) {
         this.distributor = distributor;
@@ -109,7 +132,8 @@ public class Movie {
     }
 
     /**
-     * @param actors the actors to set
+     * @param actors
+     *            the actors to set
      */
     public void setActors(List<Actor> actors) {
         this.actors = actors;
