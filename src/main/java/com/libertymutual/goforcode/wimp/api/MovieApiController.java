@@ -1,8 +1,10 @@
 
 package com.libertymutual.goforcode.wimp.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,23 +15,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.wimp.models.Actor;
 import com.libertymutual.goforcode.wimp.models.Movie;
+import com.libertymutual.goforcode.wimp.repositories.ActorRepository;
 import com.libertymutual.goforcode.wimp.repositories.MovieRepository;
 
 @RestController
 @RequestMapping("/api/movies")
 public class MovieApiController {
 
+    
     private MovieRepository movieRepo;
     
-    public MovieApiController(MovieRepository movieRepo) {
+    
+    private ActorRepository actorRepo;
+    
+    public MovieApiController(MovieRepository movieRepo, ActorRepository actorRepo) {
         this.movieRepo = movieRepo;
+        this.actorRepo = actorRepo;
+        
+        List<Actor> actors = new ArrayList<Actor>();
+        actors.add(actorRepo.findOne((long) 1));
         
         Movie movie = new Movie();
         movie.setBudget((long) 100000000);
         movie.setDistributor("Warner Bros");
 //        movie.setReleaseDate(releaseDate);
         movie.setTitle("Wicked Boston, Kid");
+        movie.setActors(actors);
         movieRepo.save(movie);
     }
     
