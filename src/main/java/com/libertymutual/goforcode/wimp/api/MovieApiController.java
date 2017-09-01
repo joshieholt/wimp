@@ -20,13 +20,17 @@ import com.libertymutual.goforcode.wimp.models.Movie;
 import com.libertymutual.goforcode.wimp.repositories.ActorRepository;
 import com.libertymutual.goforcode.wimp.repositories.MovieRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping("/api/movies")
+@Api(description="Use this to get and create movies and add actors to movies.")
 public class MovieApiController {
 
     
     private MovieRepository movieRepo;
-    
     private ActorRepository actorRepo;
     
     public MovieApiController(MovieRepository movieRepo, ActorRepository actorRepo) {
@@ -46,11 +50,13 @@ public class MovieApiController {
         
     }
     
+    @ApiOperation(value="Get all of the movies")
     @GetMapping("")
     public List<Movie> getAll() {
         return movieRepo.findAll();
     }
     
+    @ApiOperation(value="Get a movie by its Id")
     @GetMapping("{id}")
     public Movie getOne(@PathVariable long id) throws StuffNotFoundException {
         
@@ -63,6 +69,7 @@ public class MovieApiController {
         return movie;
     }
     
+    @ApiOperation(value="Delete a movie by its Id")
     @DeleteMapping("{id}")
     public Movie deleteOne(@PathVariable long id) {
         try {
@@ -74,19 +81,23 @@ public class MovieApiController {
         }
     }
     
+    @ApiOperation(value="Create a new movie")
     @PostMapping("")
     public Movie createOne(@RequestBody Movie movie) {
         return movieRepo.save(movie);
     }
     
+    @ApiOperation(value="Update a movie using its Id")
     @PutMapping("{id}")
     public Movie update(@RequestBody Movie movie, @PathVariable long id) {
         movie.setId(id);
         return movieRepo.save(movie);
     }
     
+    @ApiOperation(value="Associate an actor with a movie",
+            notes="You only need to POST the \"id\" of the actor")
     @PostMapping("{movieId}/actors")
-    public Movie associateAnActor(@PathVariable long movieId, @RequestBody Actor actor) {
+    public Movie associateAnActor(@PathVariable long movieId, @ApiParam(value="Only the id of this parameter is used", defaultValue="{ \"id\": 1 }")@RequestBody Actor actor) {
         actor = actorRepo.findOne(actor.getId());
         Movie movie = movieRepo.findOne(movieId);
         movie.addActor(actor);
