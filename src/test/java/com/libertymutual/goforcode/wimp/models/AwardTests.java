@@ -3,9 +3,6 @@ package com.libertymutual.goforcode.wimp.models;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.Before;
 
@@ -64,21 +61,6 @@ public class AwardTests {
         
         // Assert
         assertThat(year).isEqualTo(2006);
-    }
-    
-    public void test_that_getActors_returns_list_of_actors() {
-        // Arrange
-        List<Actor> actors = new ArrayList<Actor>();
-        actors.add(new Actor());
-        actors.add(new Actor());
-        award.setActors(actors);
-        
-        // Act
-        List<Actor> actualActors = award.getActors();
-        
-        // Assert
-        assertThat(actualActors.size()).isEqualTo(2);
-        assertThat(actualActors.get(0)).isSameAs(actors.get(0));
     }
 
 }

@@ -1,14 +1,13 @@
 
 package com.libertymutual.goforcode.wimp.models;
 
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Award {
@@ -25,8 +24,8 @@ public class Award {
     
     private int year;
     
-    @ManyToMany(mappedBy="awards")
-    private List<Actor> actors;
+    @ManyToOne
+    private Actor actor;
     
     public Award() {}
     
@@ -92,17 +91,4 @@ public class Award {
         this.year = year;
     }
 
-    /**
-     * @return the actors
-     */
-    public List<Actor> getActors() {
-        return actors;
-    }
-
-    /**
-     * @param actors the actors to set
-     */
-    public void setActors(List<Actor> actors) {
-        this.actors = actors;
-    }
 }
