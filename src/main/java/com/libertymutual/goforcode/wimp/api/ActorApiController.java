@@ -1,6 +1,7 @@
 
 package com.libertymutual.goforcode.wimp.api;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,9 +34,9 @@ public class ActorApiController {
         this.actorRepo = actorRepo;
         this.awardRepo = awardRepo;
         
-        actorRepo.save(new Actor("Marky", "Mark", 1994));
-        actorRepo.save(new Actor("Donnie", "Wahlberg", 1989));
-        actorRepo.save(new Actor("Keanu", "Reeves", 1992));
+        actorRepo.save(new Actor("Marky", "Mark", 1994l, new Date(Date.parse("01/01/1970")), null, null));
+        actorRepo.save(new Actor("Donnie", "Wahlberg", 1989l, new Date(Date.parse("01/01/1967")), null, null));
+        actorRepo.save(new Actor("Keanu", "Reeves", 1992l, new Date(Date.parse("01/01/1972")), null, null));
         
     }
     

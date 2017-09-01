@@ -42,8 +42,9 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String title, long budget, String distributor, List<Actor> actors) {
+    public Movie(String title, Date releaseDate, long budget, String distributor, List<Actor> actors) {
         this.title = title;
+        this.releaseDate = releaseDate;
         this.budget = budget;
         this.distributor = distributor;
         this.actors = actors;

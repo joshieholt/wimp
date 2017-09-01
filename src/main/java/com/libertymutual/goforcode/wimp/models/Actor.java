@@ -45,10 +45,13 @@ public class Actor {
 
     public Actor() {}
     
-    public Actor(String firstName, String lastName, long activeSinceYear) {
+    public Actor(String firstName, String lastName, long activeSinceYear, Date birthDate, List<Movie> movies, List<Award> awards) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.activeSinceYear = activeSinceYear;
+        this.birthDate = birthDate;
+        this.movies = movies;
+        this.awards = awards;
     }
     
     public void addAward(Award award) {

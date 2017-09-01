@@ -1,6 +1,7 @@
 
 package com.libertymutual.goforcode.wimp.api;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,12 +42,12 @@ public class MovieApiController {
         actors.add(actorRepo.findOne((long) 1));
         actors.add(actorRepo.findOne((long) 2));
         
-        movieRepo.save(new Movie("Wicked Boston, Kid", 100000000, "Warner Bros", actors));
+        movieRepo.save(new Movie("Wicked Boston, Kid", new Date(Date.parse("01/01/2000")), 100000000, "Warner Bros", actors));
         
         actors = new ArrayList<Actor>();
         actors.add(actorRepo.findOne((long) 3));
         
-        movieRepo.save(new Movie("The Matrix", 45000, "MGM", actors));
+        movieRepo.save(new Movie("The Matrix", new Date(Date.parse("01/01/1999")), 45000, "MGM", actors));
         
     }
     

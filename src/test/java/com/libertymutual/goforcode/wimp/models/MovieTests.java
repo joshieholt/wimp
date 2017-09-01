@@ -13,19 +13,107 @@ import org.junit.Test;
 public class MovieTests {
 
     private Movie movie;
+    private List<Actor> actors;
     
     @Before
     public void setUp() {
-        movie = new Movie();
+        actors = new ArrayList<Actor>();
+        actors.add(new Actor());
+        actors.add(new Actor());
+        movie = new Movie("Title", new Date(Date.parse("01/01/2000")), 1000000, "Warner Bros", actors); 
+    }
+    
+    @Test
+    public void test_that_getTitle_returns_title_of_movie() {
+        // Arrange
+        
+        // Act
+        String title = movie.getTitle();
+        
+        // Assert
+        assertThat(title).isEqualTo("Title");
+    }
+    
+    @Test
+    public void test_that_setTitle_sets_title_of_movie() {
+        // Arrange
+        
+        // Act
+        movie.setTitle("New Title");
+        
+        // Assert
+        assertThat(movie.getTitle()).isEqualTo("New Title");
+    }
+    
+    @Test
+    public void test_that_getReleaseDate_returns_releaseDate_of_movie() {
+        // Arrange
+        
+        // Act
+        Date releaseDate = movie.getReleaseDate();
+        
+        // Assert
+        assertThat(releaseDate).isEqualTo(new Date(Date.parse("01/01/2000")));
+    }
+    
+    @Test
+    public void test_that_setReleaseDate_sets_releaseDate_of_movie() {
+        // Arrange
+        
+        // Act
+        movie.setReleaseDate(new Date(Date.parse("12/31/9999")));
+        
+        // Assert
+        assertThat(movie.getReleaseDate()).isEqualTo(new Date(Date.parse("12/31/9999")));
+    }
+    
+    @Test
+    public void test_that_getBudget_returns_budget_of_movie() {
+        // Arrange
+        
+        // Act
+        long budget = movie.getBudget();
+        
+        // Assert
+        assertThat(budget).isEqualTo(1000000);
+    }  
+    
+    @Test
+    public void test_that_setBudget_sets_budget_of_movie() {
+        // Arrange
+        
+        // Act
+        movie.setBudget(25l);
+        
+        // Assert
+        assertThat(movie.getBudget()).isEqualTo(25l);
+    }
+    
+    @Test
+    public void test_that_getDistributor_returns_distributor_of_movie() {
+        // Arrange
+        
+        // Act
+        String dist = movie.getDistributor();
+        
+        // Assert
+        assertThat(dist).isEqualTo("Warner Bros");
+    }
+    
+    @Test
+    public void test_that_setDistributor_sets_distributor_of_movie() {
+        // Arrange
+        
+        // Act
+        movie.setDistributor("LionsGate");
+        
+        // Assert
+        assertThat(movie.getDistributor()).isEqualTo("LionsGate");
     }
     
     @Test
     public void test_that_getActors_returns_list_of_actors() {
         // Arrange
-        List<Actor> actors = new ArrayList<Actor>();
-        actors.add(new Actor());
-        actors.add(new Actor());
-        movie.setActors(actors);
         
         // Act
         List<Actor> actualActors = movie.getActors();
@@ -36,7 +124,7 @@ public class MovieTests {
     }
     
     @Test
-    public void test_that_add_actor_returns_list_of_actors() {
+    public void test_that_add_actor_returns_list_of_actors_with_new_actor() {
         // Arrange
         Actor actor = new Actor();
         
@@ -44,9 +132,9 @@ public class MovieTests {
         movie.addActor(actor);
         
         // Assert
-        assertThat(movie.getActors().get(0)).isSameAs(actor);
-        
+        assertThat(movie.getActors().get(2)).isSameAs(actor);
     }
+    
     @Test
     public void test_that_add_actor_returns_list_when_list_is_initially_null() {
         // Arrange
@@ -59,52 +147,10 @@ public class MovieTests {
         // Assert
         assertThat(movie.getActors().get(0)).isSameAs(actor);
     }
-    
-    @Test
-    public void test_that_getTitle_returns_title_of_movie() {
-        // Arrange
-        movie.setTitle("new title");
-        
-        // Act
-        String title = movie.getTitle();
-        
-        // Assert
-        assertThat(title).isEqualTo("new title");
-    }
 
-    @Test
-    public void test_that_getReleaseDate_returns_releaseDate_of_movie() {
-        // Arrange
-        movie.setReleaseDate(new Date(Date.parse("08/04/2006")));
-        
-        // Act
-        Date releaseDate = movie.getReleaseDate();
-        
-        // Assert
-        assertThat(releaseDate).isEqualTo(new Date(Date.parse("08/04/2006")));
-    }
+
     
-    @Test
-    public void test_that_getBudget_returns_budget_of_movie() {
-        // Arrange
-        movie.setBudget(12345l);
-        
-        // Act
-        long budget = movie.getBudget();
-        
-        // Assert
-        assertThat(budget).isEqualTo(12345l);
-    }    
+  
     
-    @Test
-    public void test_that_getDistributor_returns_distributor_of_movie() {
-        // Arrange
-        movie.setDistributor("distributor");
-        
-        // Act
-        String dist = movie.getDistributor();
-        
-        // Assert
-        assertThat(dist).isEqualTo("distributor");
-    }
+
 }
